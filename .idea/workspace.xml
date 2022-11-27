@@ -2,24 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="51631144-2f41-4366-ae7e-d0aa689f072d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/assets/app.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/bootstrap.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/controllers.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/controllers/hello_controller.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/styles/app.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config/packages/twig.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config/packages/webpack_encore.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Controller/DashboardController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/dashboard/dashboard.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webpack.config.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/bundles.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/bundles.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/styles/variables.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/dashboard/ads.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/dashboard/apps.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/dashboard/main.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/dashboard/user-settings.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/parts/left-sidebar.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/parts/top-navigation.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/styles/app.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/styles/app.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/DashboardController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/DashboardController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/dashboard/dashboard.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,10 +89,17 @@
     "ASKED_ADD_EXTERNAL_FILES": "true",
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "last_opened_file_path": "/home/tburic/workspace/adffio/templates/dashboard",
+    "nodejs_package_manager_path": "yarn",
+    "settings.editor.selected.configurable": "editor.preferences.tabs",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/templates/dashboard" />
+    </key>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -105,7 +109,7 @@
       <option name="presentableId" value="Default" />
       <updated>1669564510969</updated>
       <workItem from="1669564515538" duration="1011000" />
-      <workItem from="1669565593906" duration="4853000" />
+      <workItem from="1669565593906" duration="11266000" />
     </task>
     <servers />
   </component>
