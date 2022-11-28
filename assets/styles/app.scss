@@ -2,7 +2,7 @@
 @import "~bootstrap/scss/bootstrap";
 
 body {
-    background-color: $gray-100;
+    background-color: #dee2e6;
 }
 
 .navbar {
@@ -10,6 +10,14 @@ body {
     width: 100%;
     top: 0;
     z-index: 100;
+
+    .navbar-collapse {
+        flex-grow: unset;
+
+        .navbar-nav {
+            margin-right: 0;
+        }
+    }
 }
 
 .app-content {
