@@ -1,15 +1,34 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="card">
+    <h3 class="mb-4 mt-3">Apps</h3>
+
+    <div class="card mb-3">
+        <div class="card-header">
+            Add new App
+        </div>
         <div class="card-body">
-            <h5 class="card-title mb-0">Apps</h5>
+            {{ form(form) }}
         </div>
     </div>
 
     <div class="card">
+        <div class="card-header">
+            List of apps
+        </div>
         <div class="card-body">
-            actions
+            <ol class="list-group list-group-numbered">
+                {% for app in apps %}
+                    <li class="list-group-item d-flex justify-content-between align-items-start" {{ stimulus_controller('delete-app') }}>
+                        <div class="ms-2 me-auto">
+                            <div class="d-none" {{ stimulus_target('delete-app', 'id') }}>{{ app.id }}</div>
+                            <div class="fw-bold">{{ app.name }}</div>
+                            <a href="{{ app.url }}" target="_blank" class="url">{{ app.url }}</a>
+                        </div>
+                        <span class="badge bg-secondary rounded-pill cursor-pointer" data-action="click->delete-app#delete">Delete</span>
+                    </li>
+                {% endfor %}
+            </ol>
         </div>
     </div>
 {% endblock %}

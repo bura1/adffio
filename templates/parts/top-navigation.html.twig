@@ -6,18 +6,30 @@
         <a class="navbar-brand" href="/">adff.io</a>
         <div class="collapse navbar-collapse" id="topNavbarToggler">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="/">Dashboard</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/apps">Apps</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/ads">Ads</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/user-settings">User settings</a>
-                </li>
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/apps">Apps</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/ads">Ads</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/user-settings">User settings</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Logout</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/register">Register</a>
+                    </li>
+                {% endif %}
             </ul>
         </div>
     </div>
