@@ -17,18 +17,16 @@ class Ad
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\Length(
-        min: 2,
-        max: 50,
-        minMessage: 'Your first name must be at least {{ limit }} characters long',
-        maxMessage: 'Your first name cannot be longer than {{ limit }} characters',
-    )]
+    #[Assert\NotNull]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotNull]
     private ?string $message = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotNull]
+    #[Assert\Url]
     private ?string $url = null;
 
     #[ORM\Column(nullable: true)]

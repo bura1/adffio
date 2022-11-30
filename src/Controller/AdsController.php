@@ -17,7 +17,9 @@ class AdsController extends AbstractController
     public function ads(Request $request, EntityManagerInterface $entityManager, AdRepository $adRepository): Response
     {
         $ad = new Ad();
-        $form = $this->createForm(AdType::class, $ad);
+        $form = $this->createForm(AdType::class, $ad, [
+            'userId' => $this->getUser()->getId()
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -32,6 +34,6 @@ class AdsController extends AbstractController
 
         return $this->render('dashboard/ads.html.twig', [
             'form' => $form->createView()
-        ]);
+        ], new Response(null, $form->isSubmitted() && !$form->isValid() ? 422 : 200));
     }
 }

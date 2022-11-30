@@ -7,7 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AppRepository::class)]
 class App
@@ -15,22 +15,22 @@ class App
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups('app')]
-    private ?int $id = null;
+    private ?int $id;
 
     #[ORM\Column(length: 255)]
-    #[Groups('app')]
-    private ?string $name = null;
+    #[Assert\NotBlank]
+    private ?string $name;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    #[Groups('app')]
-    private ?string $url = null;
+    #[Assert\Url]
+    private ?string $url;
 
     #[ORM\ManyToOne(inversedBy: 'apps')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $user = null;
+    private ?User $user;
 
     #[ORM\OneToMany(mappedBy: 'app', targetEntity: Ad::class, orphanRemoval: true)]
+    #[ORM\JoinColumn(nullable: true)]
     private Collection $ads;
 
     public function __construct()

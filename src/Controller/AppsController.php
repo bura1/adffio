@@ -19,12 +19,13 @@ class AppsController extends AbstractController
     public function apps(Request $request, EntityManagerInterface $entityManager, AppRepository $appRepository): Response
     {
         $app = new App();
+        $app->setUser($this->getUser());
+
         $form = $this->createForm(AppType::class, $app);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $app = $form->getData();
-            $app->setUser($this->getUser());
 
             $entityManager->persist($app);
             $entityManager->flush();
@@ -37,7 +38,7 @@ class AppsController extends AbstractController
         return $this->render('dashboard/apps.html.twig', [
             'form' => $form->createView(),
             'apps' => $apps
-        ]);
+        ], new Response(null, $form->isSubmitted() && !$form->isValid() ? 422 : 200));
     }
 
     #[Route('/delete-app/{appId}', name: 'delete-app')]
