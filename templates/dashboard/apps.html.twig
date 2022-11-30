@@ -22,7 +22,7 @@
                     <li class="list-group-item d-flex justify-content-between align-items-start" {{ stimulus_controller('delete-app') }}>
                         <div class="ms-2 me-auto">
                             <div class="d-none" {{ stimulus_target('delete-app', 'id') }}>{{ app.id }}</div>
-                            <div class="fw-bold">{{ app.name }}</div>
+                            <div class="fw-bold" {{ stimulus_target('delete-app', 'name') }}>{{ app.name }}</div>
                             <a href="{{ app.url }}" target="_blank" class="url">{{ app.url }}</a>
                         </div>
                         <span class="badge bg-secondary rounded-pill cursor-pointer" data-action="click->delete-app#delete">Delete</span>

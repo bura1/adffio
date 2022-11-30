@@ -20,12 +20,6 @@ class DashboardController extends AbstractController
         return $this->render('dashboard/main.html.twig');
     }
 
-    #[Route('/ads', name: 'ads')]
-    public function ads(): Response
-    {
-        return $this->render('dashboard/ads.html.twig');
-    }
-
     #[Route('/user-settings', name: 'user-settings')]
     public function userSettings(): Response
     {

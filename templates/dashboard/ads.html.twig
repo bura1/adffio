@@ -3,9 +3,12 @@
 {% block body %}
     <h3 class="mb-4 mt-3">Ads</h3>
 
-    <div class="card">
+    <div class="card mb-3">
+        <div class="card-header">
+            Add new Ad
+        </div>
         <div class="card-body">
-            actions
+            {{ form(form) }}
         </div>
     </div>
 {% endblock %}

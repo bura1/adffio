@@ -8,11 +8,9 @@ use App\Repository\AppRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Serializer\SerializerInterface;
 
 #[IsGranted('IS_AUTHENTICATED_FULLY')]
 class AppsController extends AbstractController
@@ -42,13 +40,14 @@ class AppsController extends AbstractController
         ]);
     }
 
-//    #[Route('/get-apps', name: 'get-apps')]
-//    public function getApps(AppRepository $appRepository, SerializerInterface $serializer): JsonResponse
-//    {
-//        $apps = $appRepository->findBy(['user' => $this->getUser()]);
-//
-//        $json = $serializer->serialize($apps, 'json', ['groups' => ['app']]);
-//
-//        return new JsonResponse($json);
-//    }
+    #[Route('/delete-app/{appId}', name: 'delete-app')]
+    public function deleteApp($appId, AppRepository $appRepository, EntityManagerInterface $entityManager): Response
+    {
+        $app = $appRepository->findOneBy(['id' => $appId]);
+
+        $entityManager->remove($app);
+        $entityManager->flush();
+
+        return new Response(null, 204);
+    }
 }
