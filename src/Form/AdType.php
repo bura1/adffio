@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Ad;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -15,11 +16,12 @@ class AdType extends AbstractType
             ->add('name')
             ->add('message')
             ->add('url')
-            ->add('clicks')
-            ->add('createdAt')
-            ->add('active')
-            ->add('user')
-            ->add('app')
+            ->add('save', SubmitType::class, [
+                'label' => 'Add New App',
+                'attr' => [
+                    'class' => 'btn-dark'
+                ]
+            ])
         ;
     }
 
