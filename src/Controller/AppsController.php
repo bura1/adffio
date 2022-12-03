@@ -35,9 +35,15 @@ class AppsController extends AbstractController
 
         $apps = $appRepository->findBy(['user' => $this->getUser()]);
 
+        $formValid = 'true';
+        if ($form->isSubmitted() && !$form->isValid()) {
+            $formValid = 'false';
+        }
+
         return $this->render('dashboard/apps.html.twig', [
             'form' => $form->createView(),
-            'apps' => $apps
+            'apps' => $apps,
+            'formValid' => $formValid
         ], new Response(null, $form->isSubmitted() && !$form->isValid() ? 422 : 200));
     }
 

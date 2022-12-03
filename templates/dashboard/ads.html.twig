@@ -4,11 +4,17 @@
     <h3 class="mb-4 mt-3">Ads</h3>
 
     <div class="card mb-3">
-        <div class="card-header">
-            Add new Ad
-        </div>
-        <div class="card-body">
-            {{ form(form, {'attr': {'novalidate': 'novalidate'}}) }}
+        <div class="accordion" id="accordionAdForm">
+            <div class="accordion-item">
+                <div class="card-header cursor-pointer" data-bs-toggle="collapse" data-bs-target="#collapseForm" aria-controls="collapseForm" {% if formValid == 'false' %}aria-expanded="true"{% else %}aria-expanded="false"{% endif %}>
+                    Create New Ad
+                </div>
+                <div id="collapseForm" class="accordion-collapse collapse {% if formValid == 'false' %}show{% endif %}" aria-labelledby="headingForm" data-bs-parent="#accordionAdForm">
+                    <div class="card-body">
+                        {{ form(form, {'attr': {'novalidate': 'novalidate'}}) }}
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -28,7 +34,9 @@
                                     <div class="fw-bold" {{ stimulus_target('delete-ad', 'name') }}>{{ ad.name }}</div>
                                     <div>{{ ad.message }}</div>
                                     <a href="{{ ad.url }}" target="_blank" class="url">{{ ad.url }}</a>
-                                    <img src="/files/{{ ad.adImage.getFilePath }}">
+                                    {% if ad.adImage %}
+                                        <img src="/files/{{ ad.adImage.getFilePath }}">
+                                    {% endif %}
                                 </div>
                                 <span class="badge bg-secondary rounded-pill cursor-pointer" data-action="click->delete-ad#delete">Delete</span>
                             </li>

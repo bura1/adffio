@@ -31,48 +31,52 @@ class AdsController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $uploadedFile = $form->get('image')->getData();
-            $originalFilename = $uploadedFile->getClientOriginalName();
 
-            $violations = $validator->validate(
-                $uploadedFile,
-                [
-                    new File([
-                        'maxSize' => '1M',
-                        'mimeTypes' => [
-                            'image/jpeg',
-                            'image/png'
-                        ]
-                    ])
-                ]
-            );
+            if ($uploadedFile) {
 
-            if ($violations->count() > 0) {
-                return $this->render('dashboard/ads.html.twig', [
-                    'form' => $form->createView()
-                ], new Response(null, 422));
+                $originalFilename = $uploadedFile->getClientOriginalName();
+                $violations = $validator->validate(
+                    $uploadedFile,
+                    [
+                        new File([
+                            'maxSize' => '1M',
+                            'mimeTypes' => [
+                                'image/jpeg',
+                                'image/png'
+                            ]
+                        ])
+                    ]
+                );
+
+                if ($violations->count() > 0) {
+                    return $this->render('dashboard/ads.html.twig', [
+                        'form' => $form->createView()
+                    ], new Response(null, 422));
+                }
+
+                $filename = $fileHelper->uploadAdImage($uploadedFile);
+                $adImage = new AdImage();
+                $adImage->setName($filename);
+                $adImage->setOriginalName($originalFilename ?? $filename);
+                $adImage->setMimeType($uploadedFile->getMimeType() ?? 'application/octet-stream');
+                $adImage->setSize($uploadedFile->getSize());
+                $adImage->setUploadedAt(new \DateTimeImmutable("now"));
             }
-
-            $filename = $fileHelper->uploadAdImage($uploadedFile);
-
-            $adImage = new AdImage();
-            $adImage->setName($filename);
-            $adImage->setOriginalName($originalFilename ?? $filename);
-            $adImage->setMimeType($uploadedFile->getMimeType() ?? 'application/octet-stream');
-            $adImage->setSize($uploadedFile->getSize());
-            $adImage->setUploadedAt(new \DateTimeImmutable("now"));
 
             $ad = $form->getData();
             $ad->setUser($this->getUser());
-            $ad->setAdImage($adImage);
             $ad->setCreatedAt(new \DateTimeImmutable("now"));
             $ad->setClicks(0);
             $ad->setViews(0);
-            $ad->setActive(true);
+            $ad->setActive(false);
 
-            $adImage->setAd($ad);
+            if ($uploadedFile) {
+                $ad->setAdImage($adImage);
+                $adImage->setAd($ad);
+                $entityManager->persist($adImage);
+            }
 
             $entityManager->persist($ad);
-            $entityManager->persist($adImage);
             $entityManager->flush();
 
             return $this->redirectToRoute('ads');
@@ -82,10 +86,16 @@ class AdsController extends AbstractController
 
         $appsList = $appRepository->getListOfUniqueUsersApps($this->getUser());
 
+        $formValid = 'true';
+        if ($form->isSubmitted() && !$form->isValid()) {
+            $formValid = 'false';
+        }
+
         return $this->render('dashboard/ads.html.twig', [
             'form' => $form->createView(),
             'ads' => $ads,
-            'appsList' => $appsList
+            'appsList' => $appsList,
+            'formValid' => $formValid
         ], new Response(null, $form->isSubmitted() && !$form->isValid() ? 422 : 200));
     }
 

@@ -4,11 +4,17 @@
     <h3 class="mb-4 mt-3">Apps</h3>
 
     <div class="card mb-3">
-        <div class="card-header">
-            Add new App
-        </div>
-        <div class="card-body">
-            {{ form(form, {'attr': {'novalidate': 'novalidate'}}) }}
+        <div class="accordion" id="accordionAppForm">
+            <div class="accordion-item">
+                <div class="card-header cursor-pointer" data-bs-toggle="collapse" data-bs-target="#collapseForm" aria-controls="collapseForm" {% if formValid == 'false' %}aria-expanded="true"{% else %}aria-expanded="false"{% endif %}>
+                    Create New App
+                </div>
+                <div id="collapseForm" class="accordion-collapse collapse {% if formValid == 'false' %}show{% endif %}" aria-labelledby="headingForm" data-bs-parent="#accordionAppForm">
+                    <div class="card-body">
+                        {{ form(form, {'attr': {'novalidate': 'novalidate'}}) }}
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 

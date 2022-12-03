@@ -17,7 +17,7 @@ class AppType extends AbstractType
             ->add('name', TextType::class)
             ->add('url', TextType::class)
             ->add('save', SubmitType::class, [
-                'label' => 'Add New App',
+                'label' => 'Create New App',
                 'attr' => [
                     'class' => 'btn-dark'
                 ]
