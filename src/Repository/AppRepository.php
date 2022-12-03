@@ -4,6 +4,8 @@ namespace App\Repository;
 
 use App\Entity\App;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\AbstractQuery;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -39,20 +41,22 @@ class AppRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return App[] Returns an array of App objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('a.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function getListOfUniqueUsersApps($user): array
+    {
+        $result = $this->createQueryBuilder('a')
+            ->andWhere('a.user = :val')
+            ->setParameter('val', $user)
+            ->orderBy('a.name', 'ASC')
+            ->getQuery()
+            ->getResult(AbstractQuery::HYDRATE_ARRAY)
+        ;
+
+        $apps = [];
+        foreach ($result as $row) {
+            $apps[] = $row['name'];
+        }
+        return array_unique($apps);
+    }
 
 //    public function findOneBySomeField($value): ?App
 //    {

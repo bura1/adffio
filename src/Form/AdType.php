@@ -47,7 +47,7 @@ class AdType extends AbstractType
                 ],
             ])
             ->add('save', SubmitType::class, [
-                'label' => 'Add New Ad',
+                'label' => 'Create New Ad',
                 'attr' => [
                     'class' => 'btn-dark'
                 ]

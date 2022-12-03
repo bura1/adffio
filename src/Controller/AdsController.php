@@ -6,8 +6,10 @@ use App\Entity\Ad;
 use App\Entity\AdImage;
 use App\Form\AdType;
 use App\Repository\AdRepository;
+use App\Repository\AppRepository;
 use App\Service\FileHelper;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,8 +19,9 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class AdsController extends AbstractController
 {
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
     #[Route('/ads', name: 'ads')]
-    public function ads(Request $request, EntityManagerInterface $entityManager, AdRepository $adRepository, ValidatorInterface $validator, FileHelper $fileHelper): Response
+    public function ads(Request $request, EntityManagerInterface $entityManager, AdRepository $adRepository, ValidatorInterface $validator, FileHelper $fileHelper, AppRepository $appRepository): Response
     {
         $ad = new Ad();
         $form = $this->createForm(AdType::class, $ad, [
@@ -75,8 +78,29 @@ class AdsController extends AbstractController
             return $this->redirectToRoute('ads');
         }
 
+        $ads = $adRepository->findBy(['user' => $this->getUser()]);
+
+        $appsList = $appRepository->getListOfUniqueUsersApps($this->getUser());
+
         return $this->render('dashboard/ads.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'ads' => $ads,
+            'appsList' => $appsList
         ], new Response(null, $form->isSubmitted() && !$form->isValid() ? 422 : 200));
+    }
+
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
+    #[Route('/delete-ad/{adId}', name: 'delete-ad')]
+    public function deleteAd($adId, AdRepository $adRepository, EntityManagerInterface $entityManager, FileHelper $fileHelper): Response
+    {
+        $ad = $adRepository->findOneBy(['id' => $adId]);
+        $adImage = $ad->getAdImage();
+
+        $entityManager->remove($ad);
+        $entityManager->flush();
+
+        $fileHelper->deleteFile($adImage->getFilePath());
+
+        return new Response(null, 204);
     }
 }

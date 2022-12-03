@@ -11,4 +11,31 @@
             {{ form(form, {'attr': {'novalidate': 'novalidate'}}) }}
         </div>
     </div>
+
+    <div class="card list-of-ads">
+        <div class="card-header">
+            List of Ads
+        </div>
+        <div class="card-body">
+            {% for app in appsList %}
+            <ol class="list-group list-group-numbered mb-4">
+                <h4 class="mb-2">{{ app }}</h4>
+                    {% for ad in ads %}
+                        {% if ad.getApp.name == app %}
+                            <li class="list-group-item d-flex justify-content-between align-items-start" {{ stimulus_controller('delete-ad') }}>
+                                <div class="ms-2 me-auto">
+                                    <div class="d-none" {{ stimulus_target('delete-ad', 'id') }}>{{ ad.id }}</div>
+                                    <div class="fw-bold" {{ stimulus_target('delete-ad', 'name') }}>{{ ad.name }}</div>
+                                    <div>{{ ad.message }}</div>
+                                    <a href="{{ ad.url }}" target="_blank" class="url">{{ ad.url }}</a>
+                                    <img src="/files/{{ ad.adImage.getFilePath }}">
+                                </div>
+                                <span class="badge bg-secondary rounded-pill cursor-pointer" data-action="click->delete-ad#delete">Delete</span>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+            </ol>
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}
