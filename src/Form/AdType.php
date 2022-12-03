@@ -12,6 +12,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
+use Symfony\UX\Dropzone\Form\DropzoneType;
 
 class AdType extends AbstractType
 {
@@ -31,8 +33,21 @@ class AdType extends AbstractType
             ->add('name', TextType::class)
             ->add('message', TextareaType::class)
             ->add('url', TextType::class)
+            ->add('image', DropzoneType::class, [
+                'mapped' => false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '1024k',
+                        'mimeTypes' => [
+                            'image/jpeg',
+                            'image/png',
+                        ],
+                        'mimeTypesMessage' => 'Please upload a valid JPEG/JPG or PNG file.',
+                    ])
+                ],
+            ])
             ->add('save', SubmitType::class, [
-                'label' => 'Add New App',
+                'label' => 'Add New Ad',
                 'attr' => [
                     'class' => 'btn-dark'
                 ]

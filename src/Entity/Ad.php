@@ -14,37 +14,43 @@ class Ad
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    private ?int $id;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotNull]
-    private ?string $name = null;
+    private ?string $name;
 
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotNull]
-    private ?string $message = null;
+    private ?string $message;
 
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotNull]
     #[Assert\Url]
-    private ?string $url = null;
+    private ?string $url;
 
-    #[ORM\Column(nullable: true)]
-    private ?int $clicks = null;
+    #[ORM\Column(nullable: false)]
+    private ?int $clicks;
+
+    #[ORM\Column(nullable: false)]
+    private ?int $views;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $createdAt = null;
+    private ?\DateTimeImmutable $createdAt;
 
     #[ORM\ManyToOne(inversedBy: 'ads')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $user = null;
+    private ?User $user;
 
     #[ORM\ManyToOne(inversedBy: 'ads')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?App $app = null;
+    private ?App $app;
 
     #[ORM\Column]
-    private ?bool $active = null;
+    private ?bool $active;
+
+    #[ORM\OneToOne(targetEntity: AdImage::class, orphanRemoval: true)]
+    private $adImage;
 
     public function __construct()
     {
@@ -104,6 +110,18 @@ class Ad
         return $this;
     }
 
+    public function getViews(): ?int
+    {
+        return $this->views;
+    }
+
+    public function setViews(?int $views): self
+    {
+        $this->views = $views;
+
+        return $this;
+    }
+
     public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->createdAt;
@@ -148,6 +166,27 @@ class Ad
     public function setActive(bool $active): self
     {
         $this->active = $active;
+
+        return $this;
+    }
+
+    public function getAdImage(): ?AdImage
+    {
+        return $this->adImage;
+    }
+
+    public function setAdImage(?AdImage $adImage): self
+    {
+        $this->adImage = $adImage;
+
+        return $this;
+    }
+
+    public function removeAdImage(AdImage $adImage): self
+    {
+        if ($adImage->getAd() === $this) {
+            $adImage->setAd(null);
+        }
 
         return $this;
     }
