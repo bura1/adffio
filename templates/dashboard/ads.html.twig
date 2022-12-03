@@ -28,17 +28,18 @@
                 <h4 class="mb-2">{{ app }}</h4>
                     {% for ad in ads %}
                         {% if ad.getApp.name == app %}
-                            <li class="list-group-item d-flex justify-content-between align-items-start" {{ stimulus_controller('delete-ad') }}>
+                            <li class="list-group-item d-flex justify-content-between align-items-start" {{ stimulus_controller('handle-ad') }}>
                                 <div class="ms-2 me-auto">
-                                    <div class="d-none" {{ stimulus_target('delete-ad', 'id') }}>{{ ad.id }}</div>
-                                    <div class="fw-bold" {{ stimulus_target('delete-ad', 'name') }}>{{ ad.name }}</div>
+                                    <div class="d-none" {{ stimulus_target('handle-ad', 'id') }}>{{ ad.id }}</div>
+                                    <div class="fw-bold" {{ stimulus_target('handle-ad', 'name') }}>{{ ad.name }} {% if ad.active %}- <span class="text-success fw-bold">Active</span>{% endif %}</div>
                                     <div>{{ ad.message }}</div>
                                     <a href="{{ ad.url }}" target="_blank" class="url">{{ ad.url }}</a>
                                     {% if ad.adImage %}
                                         <img src="/files/{{ ad.adImage.getFilePath }}">
                                     {% endif %}
                                 </div>
-                                <span class="badge bg-secondary rounded-pill cursor-pointer" data-action="click->delete-ad#delete">Delete</span>
+                                <span class="badge bg-secondary rounded-pill cursor-pointer" data-action="click->handle-ad#delete">Delete</span>
+                                {% if not ad.active %}<span class="badge bg-success rounded-pill cursor-pointer ms-2" data-action="click->handle-ad#activate">Activate</span>{% endif %}
                             </li>
                         {% endif %}
                     {% endfor %}

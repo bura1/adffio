@@ -35,6 +35,7 @@ class AdType extends AbstractType
             ->add('url', TextType::class)
             ->add('image', DropzoneType::class, [
                 'mapped' => false,
+                'required' => true,
                 'constraints' => [
                     new File([
                         'maxSize' => '1024k',

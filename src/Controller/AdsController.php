@@ -113,4 +113,24 @@ class AdsController extends AbstractController
 
         return new Response(null, 204);
     }
+
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
+    #[Route('/activate-ad/{adId}', name: 'activate-ad')]
+    public function activateAd($adId, AdRepository $adRepository, EntityManagerInterface $entityManager): Response
+    {
+        $selectedAd = $adRepository->findOneBy(['id' => $adId]);
+        $activeAds = $adRepository->findBy(['app' => $selectedAd->getApp(), 'active' => true]);
+
+        foreach ($activeAds as $activeAd) {
+            $activeAd->setActive(false);
+            $entityManager->persist($activeAd);
+        }
+
+        $selectedAd->setActive(true);
+
+        $entityManager->persist($selectedAd);
+        $entityManager->flush();
+
+        return new Response(null, 204);
+    }
 }
