@@ -67,7 +67,7 @@ class AdsController extends AbstractController
             $ad->setCreatedAt(new \DateTimeImmutable("now"));
             $ad->setClicks(0);
             $ad->setViews(0);
-            $ad->setActive(false);
+            $ad->setActive(true);
 
             $adImage->setAd($ad);
 
