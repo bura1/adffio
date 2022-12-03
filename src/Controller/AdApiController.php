@@ -17,16 +17,25 @@ class AdApiController extends AbstractController
         $app = $appRepository->findOneBy(['id' => $appId]);
         $ad = $adRepository->findOneBy(['app' => $app, 'active' => true]);
 
-        $ad->setViews($ad->getViews() + 1);
-        $entityManager->persist($ad);
-        $entityManager->flush();
+        if (!$ad) {
+            $return = [
+                'name' => 'null',
+                'message' => 'null',
+                'url' => 'null',
+                'image' => 'null'
+            ];
+        } else {
+            $ad->setViews($ad->getViews() + 1);
+            $entityManager->persist($ad);
+            $entityManager->flush();
 
-        $return = [
-            'name' => $ad->getName(),
-            'message' => $ad->getMessage(),
-            'url' => $ad->getUrl(),
-            'image' => $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/files/' . $ad->getAdImage()->getFilePath()
-        ];
+            $return = [
+                'name' => $ad->getName(),
+                'message' => $ad->getMessage(),
+                'url' => $ad->getUrl(),
+                'image' => $ad->getAdImage() ? $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/files/' . $ad->getAdImage()->getFilePath() : 'null'
+            ];
+        }
 
         return $this->json($return);
     }

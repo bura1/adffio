@@ -7,6 +7,7 @@ use App\Entity\App;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -35,7 +36,6 @@ class AdType extends AbstractType
             ->add('url', TextType::class)
             ->add('image', DropzoneType::class, [
                 'mapped' => false,
-                'required' => true,
                 'constraints' => [
                     new File([
                         'maxSize' => '1024k',

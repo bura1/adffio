@@ -14,7 +14,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class AdsController extends AbstractController
@@ -31,29 +30,8 @@ class AdsController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $uploadedFile = $form->get('image')->getData();
-
             if ($uploadedFile) {
-
                 $originalFilename = $uploadedFile->getClientOriginalName();
-                $violations = $validator->validate(
-                    $uploadedFile,
-                    [
-                        new File([
-                            'maxSize' => '1M',
-                            'mimeTypes' => [
-                                'image/jpeg',
-                                'image/png'
-                            ]
-                        ])
-                    ]
-                );
-
-                if ($violations->count() > 0) {
-                    return $this->render('dashboard/ads.html.twig', [
-                        'form' => $form->createView()
-                    ], new Response(null, 422));
-                }
-
                 $filename = $fileHelper->uploadAdImage($uploadedFile);
                 $adImage = new AdImage();
                 $adImage->setName($filename);
@@ -109,7 +87,9 @@ class AdsController extends AbstractController
         $entityManager->remove($ad);
         $entityManager->flush();
 
-        $fileHelper->deleteFile($adImage->getFilePath());
+        if ($adImage) {
+            $fileHelper->deleteFile($adImage->getFilePath());
+        }
 
         return new Response(null, 204);
     }
